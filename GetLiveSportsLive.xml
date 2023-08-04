@@ -1,0 +1,380 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://tempuri.org/" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" name="LiveSportsBS" targetNamespace="http://tempuri.org/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+			<xs:element name="Ping">
+				<xs:complexType/>
+			</xs:element>
+			<xs:element name="PingResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="1" maxOccurs="1" name="PingResult" type="xs:long"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemAuthenticate">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="companyName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="applicationName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="channelName" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemAuthenticateResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="SystemAuthenticateResult" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemAuthenticateByCulture">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="companyName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="applicationName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="channelName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="cultureCode" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemAuthenticateByCultureResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="SystemAuthenticateByCultureResult" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemValidateToken">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemValidateTokenResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="SystemValidateTokenResult" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemValidateCulture">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemValidateCultureResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="SystemValidateCultureResult" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemAuthenticateWithExpire">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="companyName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="applicationName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="channelName" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemAuthenticateWithExpireResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="SystemAuthenticateWithExpireResult" type="tns:TokenData"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="TokenData">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Token" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ExpireAt" type="xs:dateTime"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="SystemAuthenticateByCultureWithExpire">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="companyName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="applicationName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="channelName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="cultureCode" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="SystemAuthenticateByCultureWithExpireResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="SystemAuthenticateByCultureWithExpireResult" type="tns:TokenData"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="GetLiveSports">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="request" type="tns:LiveSportsRequest"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="LiveSportsRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="ClientCode" type="xs:string"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Language" type="tns:Language"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="Daily" type="xs:boolean"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ResultStart" nillable="true" type="xs:int"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ResultPageSize" nillable="true" type="xs:int"/>
+					<xs:element minOccurs="0" maxOccurs="1" name="CatalogList" type="tns:ArrayOfString"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="Language">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Default"/>
+					<xs:enumeration value="TUR"/>
+					<xs:enumeration value="ORG"/>
+					<xs:enumeration value="ENG"/>
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:complexType name="ArrayOfString">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="GetLiveSportsResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="GetLiveSportsResult" type="tns:LiveSportsResult"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="LiveSportsResult">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="1" name="Result" type="tns:ArrayOfLiveSportsModel"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="ResultFound" nillable="true" type="xs:int"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="ArrayOfLiveSportsModel">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="LiveSportsModel" nillable="true" type="tns:LiveSportsModel"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="LiveSportsModel">
+				<xs:complexContent mixed="false">
+					<xs:extension base="tns:DynamoDBModelBase">
+						<xs:sequence>
+							<xs:element minOccurs="1" maxOccurs="1" name="ApplicationId" type="xs:long"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="CmsContentId" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="UrlSlug" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="LogoPath" type="xs:string"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="UsageSpecId" type="xs:long"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="HomeTeamName" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="VisitorTeamName" type="xs:string"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="ChannelId" type="xs:int"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="Catalog" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="ReportingGenre" type="xs:string"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="LicenseValidFrom" nillable="true" type="xs:dateTime"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="LicenseValidThru" nillable="true" type="xs:dateTime"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="StartTime" nillable="true" type="xs:dateTime"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="EventEndTime" nillable="true" type="xs:dateTime"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="LigTvSportId" nillable="true" type="xs:long"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="LigTvId" nillable="true" type="xs:long"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="ChannelName" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="AvailableCountries" type="tns:ArrayOfString"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="CatalogName" type="xs:string"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="CatalogOrder" nillable="true" type="xs:int"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="SortOrder" nillable="true" type="xs:long"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="HomeTeamLogo" type="xs:string"/>
+							<xs:element minOccurs="0" maxOccurs="1" name="VisitorTeamLogo" type="xs:string"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="HomeTeamId" type="xs:int"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="VisitorTeamId" type="xs:int"/>
+							<xs:element minOccurs="1" maxOccurs="1" name="OnTop" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="DynamoDBModelBase" abstract="true">
+				<xs:sequence>
+					<xs:element minOccurs="1" maxOccurs="1" name="CreationDate" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="UpdateDate" nillable="true" type="xs:dateTime"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="CreatedBy" nillable="true" type="xs:int"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="UpdatedBy" nillable="true" type="xs:int"/>
+					<xs:element minOccurs="1" maxOccurs="1" name="IsDeleted" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="ILiveSportsBS_Ping_InputMessage">
+		<wsdl:part name="parameters" element="tns:Ping"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_Ping_OutputMessage">
+		<wsdl:part name="parameters" element="tns:PingResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticate_InputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticate"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticate_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticateResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticateByCulture_InputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticateByCulture"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticateByCulture_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticateByCultureResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemValidateToken_InputMessage">
+		<wsdl:part name="parameters" element="tns:SystemValidateToken"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemValidateToken_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SystemValidateTokenResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemValidateCulture_InputMessage">
+		<wsdl:part name="parameters" element="tns:SystemValidateCulture"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemValidateCulture_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SystemValidateCultureResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticateWithExpire_InputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticateWithExpire"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticateWithExpire_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticateWithExpireResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticateByCultureWithExpire_InputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticateByCultureWithExpire"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_SystemAuthenticateByCultureWithExpire_OutputMessage">
+		<wsdl:part name="parameters" element="tns:SystemAuthenticateByCultureWithExpireResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_GetLiveSports_InputMessage">
+		<wsdl:part name="parameters" element="tns:GetLiveSports"/>
+	</wsdl:message>
+	<wsdl:message name="ILiveSportsBS_GetLiveSports_OutputMessage">
+		<wsdl:part name="parameters" element="tns:GetLiveSportsResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ILiveSportsBS">
+		<wsdl:operation name="Ping">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/Ping" message="tns:ILiveSportsBS_Ping_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/PingResponse" message="tns:ILiveSportsBS_Ping_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticate">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticate" message="tns:ILiveSportsBS_SystemAuthenticate_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticateResponse" message="tns:ILiveSportsBS_SystemAuthenticate_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticateByCulture">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticateByCulture" message="tns:ILiveSportsBS_SystemAuthenticateByCulture_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticateByCultureResponse" message="tns:ILiveSportsBS_SystemAuthenticateByCulture_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SystemValidateToken">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemValidateToken" message="tns:ILiveSportsBS_SystemValidateToken_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemValidateTokenResponse" message="tns:ILiveSportsBS_SystemValidateToken_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SystemValidateCulture">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemValidateCulture" message="tns:ILiveSportsBS_SystemValidateCulture_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemValidateCultureResponse" message="tns:ILiveSportsBS_SystemValidateCulture_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticateWithExpire">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticateWithExpire" message="tns:ILiveSportsBS_SystemAuthenticateWithExpire_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticateWithExpireResponse" message="tns:ILiveSportsBS_SystemAuthenticateWithExpire_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticateByCultureWithExpire">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticateByCultureWithExpire" message="tns:ILiveSportsBS_SystemAuthenticateByCultureWithExpire_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/SystemAuthenticateByCultureWithExpireResponse" message="tns:ILiveSportsBS_SystemAuthenticateByCultureWithExpire_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetLiveSports">
+			<wsdl:input wsaw:Action="http://tempuri.org/ILiveSportsBS/GetLiveSports" message="tns:ILiveSportsBS_GetLiveSports_InputMessage"/>
+			<wsdl:output wsaw:Action="http://tempuri.org/ILiveSportsBS/GetLiveSportsResponse" message="tns:ILiveSportsBS_GetLiveSports_OutputMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="BasicHttpBinding_ILiveSportsBS" type="tns:ILiveSportsBS">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="Ping">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/Ping" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticate">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/SystemAuthenticate" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticateByCulture">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/SystemAuthenticateByCulture" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SystemValidateToken">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/SystemValidateToken" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SystemValidateCulture">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/SystemValidateCulture" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticateWithExpire">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/SystemAuthenticateWithExpire" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SystemAuthenticateByCultureWithExpire">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/SystemAuthenticateByCultureWithExpire" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLiveSports">
+			<soap:operation soapAction="http://tempuri.org/ILiveSportsBS/GetLiveSports" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LiveSportsBS">
+		<wsdl:port name="BasicHttpBinding_ILiveSportsBS" binding="tns:BasicHttpBinding_ILiveSportsBS">
+			<soap:address location="http://awswincomp/virtual/basic/LiveSportsBS.svc"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

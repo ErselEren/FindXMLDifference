@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "RxRLsC9k5GJ/c39yK88n/HxnflXOFLlfjSLf36Q4TsG0RJDtr+yGJt6fm7LPDcXNcd0NCtlyatll8IDSI9tSEw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ersel\\source\\repos\\FindXMLDifference\\FindXMLDifference.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ersel\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
