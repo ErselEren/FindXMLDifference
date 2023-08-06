@@ -1,8 +1,24 @@
-﻿
-<OrderedItem xmlns:inventory="http://www.cpandl.com" xmlns:money="http://www.cohowinery.com">
-  <inventory:ItemName>Widget</inventory:ItemName>
-  <inventory:Description>Regular Widget</inventory:Description>
-  <money:UnitPrice>2.3</money:UnitPrice>
-  <inventory:Quantity>10</inventory:Quantity>
-  <money:LineTotal>23</money:LineTotal>
-</OrderedItem>
+﻿<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+				  name="LiveSportsBS"
+				  targetNamespace="http://tempuri.org/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+			<xs:element name="Ping">
+				<xs:complexType/>
+			</xs:element>
+			
+			<xs:element name="SystemAuthenticate">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="1" name="username" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="password" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="companyName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="applicationName" type="xs:string"/>
+						<xs:element minOccurs="0" maxOccurs="1" name="channelName" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			
+		</xs:schema>
+	</wsdl:types>
+</wsdl:definitions>
