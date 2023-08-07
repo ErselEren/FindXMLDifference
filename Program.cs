@@ -31,6 +31,7 @@ namespace FindXMLDifference
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFilePath);
             Console.WriteLine("--------------------------");
+            
             TraverseXmlNode(xmlDoc.DocumentElement);
 
             //print all classNames
@@ -44,16 +45,15 @@ namespace FindXMLDifference
             {
                 for (int j = 0; j < fieldItems[i].Count; j++)
                 {
-                    Console.WriteLine("Class Name : " + ClassNames[i] + " | Field Type : " + fieldItems[i][j].FieldType + "|| Field Name : " + fieldItems[i][j].FieldName);
+                    Console.WriteLine(i+"-"+j+" " + "Class Name : " + ClassNames[i] + " | Field Type : " + fieldItems[i][j].FieldType + "|| Field Name : " + fieldItems[i][j].FieldName);
                 }
                 Console.WriteLine("========================================>");
             }
 
-
-
             Console.WriteLine("END OF MAIN >> Press any key to exit...");
             Console.ReadKey();
         }
+
 
         public static void testDynamicClassGenerator()
         {
@@ -114,46 +114,57 @@ namespace FindXMLDifference
             if (node.NodeType == XmlNodeType.Element)
             {
                 //Console.WriteLine($"Element: {node.Name}");
-                string result = splitString(node.Name);
-                string result2;
-                string result3;
 
-                if (!checkStringExistInList(result, ClassNames))
+                string nodeName = splitString(node.Name);
+                string attrName;
+                string childNodeName;
+
+                if (!checkStringExistInList(nodeName, ClassNames))
                 {
-                    ClassNames.Add(result);
+                    ClassNames.Add(nodeName);
                     fieldItems.Add(new List<FieldItem>());
                 }
 
-                int index = FindIndexFromClassNames(result); //Get Index of current name of Clas Name
+                int indexOfCurrentClass = FindIndexFromClassNames(nodeName); //Get Index of current name of Clas Name
 
                 if (node.Attributes != null)
                 {
                     foreach (XmlAttribute attribute in node.Attributes)
                     {
-                        result2 = splitString(attribute.Name);
-      
-                        if (index != -1)
+                        attrName = splitString(attribute.Name);
+                        
+                        if (indexOfCurrentClass != -1)
                         {
-                            //fieldItems[index].Add(new FieldItem(result2, attribute.Value));
-                            if(!checkFieldInList(result2, fieldItems[index]))
+                            int fieldIndex = checkFieldInList(attrName, fieldItems[indexOfCurrentClass]);
+
+                            if (fieldIndex == -1)
                             {
-                                //Console.WriteLine(counter+" "+index+" Added Class : " + result + " | Field Name : " + result2);
-                                fieldItems[index].Add(new FieldItem(result2, "string"));
-                                
+                                fieldItems[indexOfCurrentClass].Add(new FieldItem(attrName, "string"));
                             }
-                                                         
                         }
                     }
                 }
 
-                if (node.HasChildNodes && index != -1)
+                if (node.HasChildNodes && indexOfCurrentClass != -1)
                 {
                     foreach( XmlNode childNode in node.ChildNodes)
                     {
-                        result3 = splitString(childNode.Name);
-                        if (!checkFieldInList(result3, fieldItems[index]))
-                            fieldItems[index].Add(new FieldItem(result3, result3));
-                            
+                        childNodeName = splitString(childNode.Name);
+                        int fieldIndex2 = checkFieldInList(childNodeName, fieldItems[indexOfCurrentClass]);
+                        
+                        if (fieldIndex2 == -1) // This is not added before
+                        {
+                            fieldItems[indexOfCurrentClass].Add(new FieldItem(childNodeName, childNodeName));
+                        }
+                        else if (fieldItems[indexOfCurrentClass][fieldIndex2].FieldType == "List:" + childNodeName)
+                        {
+                            //Do nothing, field is indicated as "List" already
+                        }
+                        else if(checkDuplicate(node, childNodeName)) //check field has dup. If has, change its type as "List"
+                        {
+                            fieldItems[indexOfCurrentClass][fieldIndex2].FieldType = "List:" + childNodeName;
+                        }
+
                         TraverseXmlNode(childNode);
                     } 
                 }
@@ -168,6 +179,33 @@ namespace FindXMLDifference
             //}
 
         }
+        public static bool checkDuplicate(XmlNode root, string str)
+        {
+            List<string> childs = new List<string>();
+            foreach (XmlNode childNode in root.ChildNodes)
+            {
+                if (childNode.NodeType == XmlNodeType.Element)
+                {
+                    childs.Add(splitString(childNode.Name));
+                }
+            }
+
+            var duplicates = childs.GroupBy(x => x)
+                .Where(g => g.Count() > 1)
+                .Select(y => y.Key)
+                .ToList();
+
+            foreach(String childNode in duplicates)
+            {
+                if (str.Equals(childNode))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
 
         private static string splitString(string str)
         {
@@ -179,16 +217,16 @@ namespace FindXMLDifference
                 return substrings[0];
         }
 
-        private static bool checkFieldInList(string name, List<FieldItem> fieldItems)
+        private static int checkFieldInList(string name, List<FieldItem> fieldItems)
         {
             for(int i = 0; i < fieldItems.Count; i++)
             {
                 if (fieldItems[i].FieldName == name)
                 {
-                    return true;
+                    return i;
                 }
             }
-            return false;
+            return -1;
         }
 
         private static int FindIndexFromClassNames(string name)
