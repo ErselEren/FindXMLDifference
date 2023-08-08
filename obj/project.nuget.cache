@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "RxRLsC9k5GJ/c39yK88n/HxnflXOFLlfjSLf36Q4TsG0RJDtr+yGJt6fm7LPDcXNcd0NCtlyatll8IDSI9tSEw==",
+  "dgSpecHash": "37FZLDDGrzfaTlSyBNyh8r2Xqte17updBtKLlfA77lBSbYRcYx4OW/g2p2rUFECvwcrvCpbmN8B8uk/pu/Xt8Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\ersel\\source\\repos\\FindXMLDifference\\FindXMLDifference.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\ersel\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\ersel\\.nuget\\packages\\microsoft.servicefabric\\9.1.1833\\microsoft.servicefabric.9.1.1833.nupkg.sha512",
+    "C:\\Users\\ersel\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\ersel\\.nuget\\packages\\system.codedom\\7.0.0\\system.codedom.7.0.0.nupkg.sha512",
+    "C:\\Users\\ersel\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512"
   ],
   "logs": []
 }

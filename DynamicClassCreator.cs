@@ -88,18 +88,22 @@ public static class DynamicClassCreator
 
   }
 
-  public static TypeBuilder CreateTypeBuilder()
+  public static TypeBuilder CreateTypeBuilder(string className)
   {
+    string strAssembly = className + "Assembly";
+    string strModule = className + "Module";
+    string strClass = className + "Class";
+    
     // Create an assembly name
-    var assemblyName = new AssemblyName("DynamicAssembly");
+    var assemblyName = new AssemblyName(strAssembly);
 
     // Create a dynamic assembly
     var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run);
 
     // Create a dynamic module in the assembly
-    var moduleBuilder = assemblyBuilder.DefineDynamicModule("DynamicModule");
+    var moduleBuilder = assemblyBuilder.DefineDynamicModule(strModule);
 
-    var typeBuilder = moduleBuilder.DefineType("DynamicClass", TypeAttributes.Public);
+    var typeBuilder = moduleBuilder.DefineType(strClass, TypeAttributes.Public);
 
     return typeBuilder;
   }
