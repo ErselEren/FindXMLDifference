@@ -122,16 +122,17 @@ namespace FindXMLDifference
             //element element = new element();
             
             List<string> pathList = new List<string>();
-            pathList.Add(node.Name);
-            pathList.Add("message");
-            checkDifferences(liveObj, testObj,pathList);
+            
+            checkDifferences(liveObj, testObj,"definitions");
 
         }
 
-        private static void checkDifferences(object liveObj, object testObj, List<string> pathList)
+        private static void checkDifferences(object liveObj, object testObj,string parent)
         {
             // iterate through all properties of the definitions object.
             //get properties of definitions
+
+
             PropertyInfo[] properties = liveObj.GetType().GetProperties(); //properties:{message,element,service,portType,...}
             foreach (PropertyInfo property in properties) // property : List<message>/element/service/portType
             {
@@ -140,38 +141,25 @@ namespace FindXMLDifference
                 {
                     if (property.GetValue(liveObj) == null && property.GetValue(testObj) != null)
                     {
-                        Console.Write("At ");
-                        foreach (var item in pathList)
-                        {
-                            Console.Write(item + " > ");
-                        }
-                        Console.Write("\nLive Xml has null value for : " + property.Name);
-                        Console.WriteLine("Test Xml has value for " + property.Name + " : " + property.GetValue(testObj) + "\n\n");
+                        Console.WriteLine("\nAt ::: "+liveObj.GetType().Name + " ||| For type ::: " + property.Name);
+                        Console.WriteLine("Live Xml has NULL value");
+                        Console.WriteLine("Test Xml has value > " + property.GetValue(testObj) + "\n");
                     }
                     else if(property.GetValue(testObj) == null && property.GetValue(liveObj) != null)
                     {
-                        Console.Write("At ");
-                        foreach (var item in pathList)
-                        {
-                            Console.Write(item + " > ");
-                        }
-
-                        Console.WriteLine("Test Xml has null value for : " + property.Name);
-                        Console.WriteLine("Live Xml has value for " + property.Name + " : " + property.GetValue(liveObj) + "\n\n");
+                        Console.WriteLine("\nAt ::: " + liveObj.GetType().Name + " ||| For type ::: " + property.Name);
+                        Console.WriteLine("Test Xml has NULL value");
+                        Console.WriteLine("Live Xml has value > " + property.GetValue(testObj) + "\n");
                     }
                     else if(property.GetValue(testObj) == null && property.GetValue(liveObj) == null)
                     {
 
                     }
                     else if(!property.GetValue(liveObj).Equals(property.GetValue(testObj)))
-                    {   
-                        Console.Write("At ");
-                        foreach (var item in pathList)
-                        {
-                            Console.Write(item + " > ");
-                        }
-                        Console.WriteLine("Live Xml " + property.Name + " : " + property.GetValue(liveObj));
-                        Console.WriteLine("Test Xml " + property.Name + " : " + property.GetValue(testObj) + "\n\n");
+                    {
+                        Console.WriteLine("\nAt ::: " + liveObj.GetType().Name + " ||| For type ::: " + property.Name);
+                        Console.WriteLine("Live Xml has value > " + property.GetValue(liveObj));
+                        Console.WriteLine("Test Xml has value > " + property.GetValue(testObj) + "\n\n");
                     }                  
                 }
                 else if(property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
@@ -180,8 +168,9 @@ namespace FindXMLDifference
                     IList liveList = (IList)property.GetValue(liveObj);
                     IList testList = (IList)property.GetValue(testObj);
 
-                    Console.WriteLine("LIST CHECK HERE");
-                    //compareLists(property,liveList,testList,pathList);
+                    Console.WriteLine("LIST CHECK HERE > " + property.Name);
+                    
+                    compareLists(property,liveList,testList,parent);
 
                     int counter = 0;
                     //foreach(var item in liveList) // item is each index of the list: which is message for definitions
@@ -197,10 +186,6 @@ namespace FindXMLDifference
                         
                     //}
 
-                    //iterate through all elements of the list
-                    //var liveList = property.GetValue(liveObj) as IList;
-                    //var testList = property.GetValue(testObj) as IList;
-                    //Type type = property.PropertyType.GetGenericArguments().First();
 
                 }
                 else
@@ -209,47 +194,21 @@ namespace FindXMLDifference
 
                     if(property.GetValue(liveObj) == null && property.GetValue(testObj) != null)
                     {
-                        Console.Write("At "); 
-                        foreach (var item in pathList)
-                        {
-                            Console.Write(item + " > ");
-                        }
-                        Console.Write("\nLive Xml has null value for : " + property.Name);
-                        Console.WriteLine("Test Xml has value for " + property.Name + " : " + property.GetValue(testObj)+"\n\n");
+                        Console.WriteLine("\nAt ::: " + liveObj.GetType().Name + " ||| For type ::: " + property.Name);
+                        Console.WriteLine("Live Xml has NULL value");
+                        Console.WriteLine("Test Xml has value > " + property.GetValue(testObj) + "\n");
                     }
                     else if (property.GetValue(testObj) == null && property.GetValue(liveObj) != null)
                     {
-                        Console.Write("At ");
-                        foreach (var item in pathList)
-                        {
-                            Console.Write(item + " > ");
-                        }
-
-                        Console.WriteLine("Test Xml has null value for : " + property.Name);
-                        Console.WriteLine("Live Xml has value for " + property.Name + " : " + property.GetValue(liveObj) + "\n\n");
+                        Console.WriteLine("\nAt ::: " + liveObj.GetType().Name + " ||| For type ::: " + property.Name);
+                        Console.WriteLine("Test Xml has NULL value");
+                        Console.WriteLine("Live Xml has value > " + property.GetValue(testObj) + "\n");
                     }
                     else
                     {
-                        //print the name of the property
-                        //Console.WriteLine("|" + property.Name);
-
-                        //print all values of the property
-                        //get properties of the property
-                        PropertyInfo[] propertyProperties = property.PropertyType.GetProperties();
-                        foreach (var propertyProperty in propertyProperties)
-                        {
-                            //print the name of the property of the property
-                            //Console.WriteLine("||" + propertyProperty.Name);
-
-                            //print the value of the property of the property
-                            //Console.WriteLine("|||" + propertyProperty.GetValue(property.GetValue(liveObj)));
-                            //Console.WriteLine("........................................");
-                        }
-
                         if(property.GetValue(liveObj) != null && property.GetValue(testObj) != null)
                         {
-                            pathList.Add(property.Name);
-                            checkDifferences(property.GetValue(liveObj), property.GetValue(testObj), pathList);                          
+                            checkDifferences(property.GetValue(liveObj), property.GetValue(testObj),property.Name);                          
                         }
                         else
                         {
@@ -264,23 +223,108 @@ namespace FindXMLDifference
             }
         }
 
-        public static void compareLists(PropertyInfo property, IList liveList, IList testList, List<string> pathList)
+        public static void compareLists(PropertyInfo property, IList liveList, IList testList,string parent)
         {
-            //property is List<message> of liveObj
-            //liveList is List<message> of liveObj
-            //testList is List<message> of testObj
-
-            //get type of list : if list is List<message> then elementType is message
+            
             Type elementType = property.PropertyType.GetGenericArguments().First();
-
-            //get the properties of message
             PropertyInfo[] elementProperties = elementType.GetProperties();
 
-            //I have a list of messages and I have a list of properties of message
-            for (int i = 0; i< liveList.Count; i++)
+            Console.WriteLine("-------------------------------------- 1" + parent);
+            //print values of properties
+            
+            if(liveList.Count > testList.Count)
             {
-                //checkDifferences(liveList[i], testList[i], pathList);
+                Console.WriteLine("Live Xml has more elements than Test Xml");
+                //find missing elements
             }
+            else if(liveList.Count < testList.Count)
+            {
+                Console.WriteLine("Test Xml has more elements than Live Xml");
+                //find missing elements
+            }
+
+
+            for(int i=0;i<liveList.Count;i++)
+            {
+                
+                
+                Console.WriteLine("I: " + liveList[i]);
+                foreach (var propertyInfo in elementProperties)
+                {
+                    //Console.WriteLine("N: " + propertyInfo.Name);
+                    //get value of of propert of propertyInfo with the name of propertyInfo.Name
+                    //Console.WriteLine("V: " + propertyInfo.GetValue(liveList[i]) + "\n");
+                    //passing liveList[i] as element, testList as list of elements, propertyInfo as property of element
+                    if (FindInList(liveList[i], testList, propertyInfo))
+                    {
+                        Console.WriteLine("Found >> " + propertyInfo.GetValue(liveList[i]));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Not Found >> " + propertyInfo.GetValue(liveList[i]));
+                    }
+                    
+                }
+            }
+            
+            
+            
+            
+
+            //foreach (var item in liveList) // item is each index of the list: which is message for definitions
+            //{
+            //    Console.WriteLine("I: "+item);
+            //    foreach (var propertyInfo in elementProperties)
+            //    {
+            //        Console.WriteLine("N: "+ propertyInfo.Name);
+            //        //get value of of propert of propertyInfo with the name of propertyInfo.Name
+            //        Console.WriteLine("V: "+propertyInfo.GetValue(item) + "\n");
+            //    }
+            //}
+            Console.WriteLine("-------------------------------------- 2");
+
+            //schema has list of element
+            //item is 'element' instance
+            //elementType variable is 'element'
+            //elementProperties is list of properties of element : complexType, name, minOccur, maxOccur, type, nillable
+            //in foreach loop, each propertyInfo is type of field.
+            //propertyInfo GetValue(item) is value of that field
+
+            
+
+            
+        }
+
+        public static bool FindInList(object? v, IList testList, PropertyInfo propertyInfo)
+        {
+            //I have two list : liveList and testList. Get each element from liveList and search in testList
+
+            //check is it generic or list
+            
+            for(int i=0;i<testList.Count;i++)
+            {
+                if(propertyInfo.GetValue(v) == null && propertyInfo.GetValue(testList[i]) == null)
+                {
+                    return true;
+                }
+                else if(propertyInfo.GetValue(v) == null && propertyInfo.GetValue(testList[i]) != null)
+                {
+                    return false;
+                }
+                else if (propertyInfo.GetValue(v) != null && propertyInfo.GetValue(testList[i]) == null)
+                {
+                    return false;
+                }
+                else if (propertyInfo.GetValue(v).Equals(propertyInfo.GetValue(testList[i])))
+                {
+                    return true;
+                }              
+            }
+            return false;
+
+            //if it is primitive type, check equality
+            //if it is user defined type, call checkDifferences
+
         }
 
         public static void TraverseXmlNode(XmlNode node)
