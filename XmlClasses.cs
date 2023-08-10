@@ -36,7 +36,7 @@ namespace FindXMLDifference
             element other = (element)obj; // Cast the object to your class type
 
             // Compare the properties that define equality
-            return (name == other.name) && (type == other.type) && (nillable == other.nillable);
+            return   (name == other.name) && (type == other.type) && (nillable == other.nillable) && (complexType == other.complexType);
         }
 
         public override int GetHashCode()
@@ -85,7 +85,7 @@ namespace FindXMLDifference
         public complexContent complexContent { get; set; }
 
         [XmlAttribute(AttributeName = "abstract", Namespace = "")]
-        public bool @abstract { get; set; }
+        public bool _abstract { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -95,13 +95,13 @@ namespace FindXMLDifference
             complexType other = (complexType)obj; // Cast the object to your class type
 
             // Compare the properties that define equality
-            return ( name == other.name) && (@abstract == other.@abstract) && (sequence == other.sequence) && (complexContent == other.complexContent);
+            return ( name == other.name) && (_abstract == other._abstract) && (sequence == other.sequence) && (complexContent == other.complexContent);
         }
 
         public override int GetHashCode()
         {
             // Generate a hash code based on the properties used in the Equals method
-            return HashCode.Combine(name, @abstract, sequence, complexContent);   
+            return HashCode.Combine(name, _abstract, sequence, complexContent);   
         }
     }
 
@@ -724,6 +724,12 @@ namespace FindXMLDifference
 
             // Compare the properties that define equality
             return ( types == other.types) && (message == other.message) && (portType == other.portType) && (binding == other.binding) && (service == other.service) && (wsdl == other.wsdl) && (wsam == other.wsam) && (wsx == other.wsx) && (wsap == other.wsap) && (msc == other.msc) && (wsp == other.wsp) && (xsd == other.xsd) && (soap == other.soap) && (wsu == other.wsu) && (soap12 == other.soap12) && (soapenc == other.soapenc) && (tns == other.tns) && (wsa10 == other.wsa10) && (wsaw == other.wsaw) && (wsa == other.wsa) && (name == other.name) && (targetNamespace == other.targetNamespace);
+        }
+
+        public override int GetHashCode()
+        {
+            // Generate a hash code based on the properties used in the Equals method
+            return HashCode.Combine(types,message,portType,binding,service);
         }
 
     }
