@@ -90,10 +90,17 @@
             <xs:element name="SystemAuthenticateWithExpireResponse">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" maxOccurs="1" name="SystemAuthenticateWithExpireResult" type="tns:TokenData"/>
+                        <xs:element minOccurs="0" maxOccurs="1" name="SystemAuthenticateWithExpireResult2" type="tns:TokenData"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:complexType name="TokenData">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Token" type="xs:integer"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ExpireAt" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ExpireAt2" type="xs:dateTime3"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:element name="SystemAuthenticateByCultureWithExpire">
                 <xs:complexType>
                     <xs:sequence>
@@ -121,6 +128,16 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:complexType name="LiveSportsRequest">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ClientCode" type="xs:string"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Language" type="tns:Language"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="Daily" type="xs:boolean"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ResultStart" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ResultPageSize" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="CatalogList" type="tns:ArrayOfString"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:simpleType name="Language">
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="Default"/>
@@ -129,6 +146,11 @@
                     <xs:enumeration value="ENG"/>
                 </xs:restriction>
             </xs:simpleType>
+            <xs:complexType name="ArrayOfString">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:element name="GetLiveSportsResponse">
                 <xs:complexType>
                     <xs:sequence>
@@ -136,6 +158,62 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:complexType name="LiveSportsResult">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="1" name="Result" type="tns:ArrayOfLiveSportsModel"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="ResultFound" nillable="true" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfLiveSportsModel">
+                <xs:sequence>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" name="LiveSportsModel" nillable="true" type="tns:LiveSportsModel"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="LiveSportsModel">
+                <xs:complexContent mixed="false">
+                    <xs:extension base="tns:DynamoDBModelBase">
+                        <xs:sequence>
+                            <xs:element minOccurs="1" maxOccurs="1" name="ApplicationId" type="xs:long"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="CmsContentId" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="Description" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="Name" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="UrlSlug" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="LogoPath" type="xs:string"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="UsageSpecId" type="xs:long"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="HomeTeamName" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="VisitorTeamName" type="xs:string"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="ChannelId" type="xs:int"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="Catalog" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="ReportingGenre" type="xs:string"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="LicenseValidFrom" nillable="true" type="xs:dateTime"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="LicenseValidThru" nillable="true" type="xs:dateTime"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="StartTime" nillable="true" type="xs:dateTime"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="EventEndTime" nillable="true" type="xs:dateTime"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="LigTvSportId" nillable="true" type="xs:long"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="LigTvId" nillable="true" type="xs:long"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="ChannelName" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="AvailableCountries" type="tns:ArrayOfString"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="CatalogName" type="xs:string"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="CatalogOrder" nillable="true" type="xs:int"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="SortOrder" nillable="true" type="xs:long"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="HomeTeamLogo" type="xs:string"/>
+                            <xs:element minOccurs="0" maxOccurs="1" name="VisitorTeamLogo" type="xs:string"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="HomeTeamId" type="xs:int"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="VisitorTeamId" type="xs:int"/>
+                            <xs:element minOccurs="1" maxOccurs="1" name="OnTop" type="xs:boolean"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="DynamoDBModelBase" abstract="true">
+                <xs:sequence>
+                    <xs:element minOccurs="1" maxOccurs="1" name="CreationDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="UpdateDate" nillable="true" type="xs:dateTime"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="CreatedBy" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="UpdatedBy" nillable="true" type="xs:int"/>
+                    <xs:element minOccurs="1" maxOccurs="1" name="IsDeleted" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
         </xs:schema>
     </wsdl:types>
     <wsdl:message name="ILiveSportsBS_Ping_InputMessage">

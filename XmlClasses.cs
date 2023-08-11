@@ -16,14 +16,14 @@ namespace FindXMLDifference
         [XmlAttribute(AttributeName = "name", Namespace = "")]
         public string name { get; set; }
 
-        [XmlIgnore]
+        [XmlAttribute(AttributeName = "minOccurs", Namespace = "")]
         public int minOccurs { get; set; }
 
-        [XmlIgnore]
+        [XmlAttribute(AttributeName = "maxOccurs", Namespace = "")]
         public string maxOccurs { get; set; }
 
         [XmlAttribute(AttributeName = "type", Namespace = "")]
-        public string type { get; set; }
+        public string _type { get; set; }
 
         [XmlAttribute(AttributeName = "nillable", Namespace = "")]
         public bool nillable { get; set; }
@@ -36,13 +36,13 @@ namespace FindXMLDifference
             element other = (element)obj; // Cast the object to your class type
 
             // Compare the properties that define equality
-            return   (name == other.name) && (type == other.type) && (nillable == other.nillable) && (complexType == other.complexType);
+            return   (name == other.name) && (_type == other._type) && (nillable == other.nillable) && (complexType == other.complexType);
         }
 
         public override int GetHashCode()
         {
             // Generate a hash code based on the properties used in the Equals method
-            return HashCode.Combine( complexType, name, type, nillable);
+            return HashCode.Combine( complexType, name, _type, nillable);
         }
     }
 
@@ -249,7 +249,7 @@ namespace FindXMLDifference
 
         [XmlElement(ElementName = "element", Namespace = "http://www.w3.org/2001/XMLSchema")]
         public List<element> element { get; set; }
-
+        
         [XmlElement(ElementName = "complexType", Namespace = "http://www.w3.org/2001/XMLSchema")]
         public List<complexType> complexType { get; set; }
 
